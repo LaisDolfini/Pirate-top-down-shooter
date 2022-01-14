@@ -7,6 +7,7 @@ public class Life : MonoBehaviour
 {   
     [Header("Required Components----------")]
     [SerializeField] private Slider _lifeBar;
+    [SerializeField] private GameObject _deathAnimation, _explosionAnimation;
     [SerializeField] private Sprite[] _shipFeedbackSprites;
     private SpriteRenderer _spriteRenderer;
 
@@ -63,19 +64,28 @@ public class Life : MonoBehaviour
     {
         _died = true;
         if(_characterType == CharacterType.Player) GetComponent<PlayerMovement>().enabled = false;
+        _deathAnimation.SetActive(true);
+        _explosionAnimation.SetActive(true);
 
         yield return new WaitForSeconds(_deathDelay);
 
+        _deathAnimation.SetActive(false);
+        _explosionAnimation.SetActive(false);
         if(_characterType == CharacterType.Enemy) gameObject.SetActive(false);
         onDied?.Invoke();
     }
 
-    void Revive()
+    public void Revive()
     {
         _spriteRenderer.sprite = _shipFeedbackSprites[0];
         _lifeBar.maxValue = _maxLife;
         _lifeBar.value = _maxLife;
         _currentLife = _maxLife;
         _died = false;
+    }
+
+    public void Kill()
+    {
+        TookDamage(_currentLife);
     }
 }

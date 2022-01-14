@@ -27,6 +27,9 @@ public class EnemyMovement : MonoBehaviour
     [Range(0, 10)]
     [SerializeField] private float _stopDistance = 1;
 
+    public bool nearPlayer { get {return _nearPlayer;} }
+    private bool _nearPlayer;
+
     void Awake()
     {
         _pathfinding = gameObject.GetComponent<Pathfinding>();
@@ -44,8 +47,16 @@ public class EnemyMovement : MonoBehaviour
         _target = _pathfinding.pathList[0].vPosition;
         transform.up = Vector3.Slerp(transform.up, _target - transform.position, Time.deltaTime * _rotationSpeed);
 
-        if(Vector3.Distance(transform.position, _player.position) > _stopDistance) ChangeMovementInputValue(true);
-        else ChangeMovementInputValue(false);
+        if(Vector3.Distance(transform.position, _player.position) > _stopDistance)
+        {
+            ChangeMovementInputValue(true);
+            _nearPlayer = false;
+        } 
+        else
+        {   
+            ChangeMovementInputValue(false);
+            _nearPlayer = true;
+        } 
 
         Move();
     }
