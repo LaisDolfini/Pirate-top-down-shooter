@@ -19,7 +19,7 @@ public class ExplosionAttack : MonoBehaviour
             if(_playerLife == null) _playerLife = other.gameObject.GetComponent<Life>();
 
             _playerLife.TookDamage(_damage);
-            _life.Kill();
+            _life.Kill(false);
         }
     }
 }

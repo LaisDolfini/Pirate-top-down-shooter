@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using PirateTopDown.Enemies;
+using PirateTopDown.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,7 +26,11 @@ public class Life : MonoBehaviour
     [Range(0, 5)]
     [SerializeField] private int _deathDelay;
     private int _currentLife;
+    public bool died {get {return _died;}}
     private bool _died;
+
+    private PlayerMovement _playerMovement;
+    private EnemyMovement _enemyMovement;
 
     public delegate void OnCharacterDied();
     public OnCharacterDied onDied;
@@ -36,6 +42,9 @@ public class Life : MonoBehaviour
         _currentLife = _maxLife;
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if(_characterType == CharacterType.Player) _playerMovement = GetComponent<PlayerMovement>();
+        else _enemyMovement = GetComponent<EnemyMovement>();
     }
 
     void OnEnable()
@@ -43,14 +52,14 @@ public class Life : MonoBehaviour
         if(_characterType == CharacterType.Enemy) Revive();
     }
 
-    public void TookDamage(int damage)
+    public void TookDamage(int damage, bool increaseScore = true)
     { 
         _currentLife -= damage;
         _lifeBar.value = _currentLife;
         ChangeShipSprite();
 
         if(_died) return;
-        if(_currentLife <= 0) StartCoroutine(Died());
+        if(_currentLife <= 0) StartCoroutine(Died(increaseScore));
     }
 
     void ChangeShipSprite()
@@ -60,10 +69,11 @@ public class Life : MonoBehaviour
         else if(_currentLife <= _maxLife/1.5f) _spriteRenderer.sprite = _shipFeedbackSprites[1];
     }
 
-    IEnumerator Died()
+    IEnumerator Died(bool increaseScore)
     {
         _died = true;
-        if(_characterType == CharacterType.Player) GetComponent<PlayerMovement>().enabled = false;
+        if(_characterType == CharacterType.Player) _playerMovement.enabled = false;
+        else _enemyMovement.enabled = false;
         _deathAnimation.SetActive(true);
         _explosionAnimation.SetActive(true);
 
@@ -72,7 +82,7 @@ public class Life : MonoBehaviour
         _deathAnimation.SetActive(false);
         _explosionAnimation.SetActive(false);
         if(_characterType == CharacterType.Enemy) gameObject.SetActive(false);
-        onDied?.Invoke();
+        if(increaseScore) onDied?.Invoke();
     }
 
     public void Revive()
@@ -81,11 +91,12 @@ public class Life : MonoBehaviour
         _lifeBar.maxValue = _maxLife;
         _lifeBar.value = _maxLife;
         _currentLife = _maxLife;
+        _enemyMovement.enabled = true;
         _died = false;
     }
 
-    public void Kill()
+    public void Kill(bool increaseScore = true)
     {
-        TookDamage(_currentLife);
+        TookDamage(_currentLife, increaseScore);
     }
 }

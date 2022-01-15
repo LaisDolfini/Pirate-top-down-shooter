@@ -98,10 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _explosion: {fileID: 5067215690074880811}
+  _targetType: 1
   _bulletDamage: 1
   _bulletLifeTime: 0.7
   _bulletSpeed: 4
-  _bulletTargetTag: Enemy
 --- !u!61 &2347614522937207387
 BoxCollider2D:
   m_ObjectHideFlags: 0

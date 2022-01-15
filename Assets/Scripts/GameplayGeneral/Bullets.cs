@@ -5,12 +5,27 @@ using UnityEngine;
 public class Bullets : MonoBehaviour
 {
     [SerializeField] private GameObject _explosion;
+
+    public enum TargetType
+    {
+        Player,
+        Enemy
+    }
+    [SerializeField] private TargetType _targetType; 
+    private Life _lastLifeGot;
+    private int _lastId;
     [SerializeField] [Range(0, 100)] private int _bulletDamage;
     [SerializeField] [Range(0, 5)] private float _bulletLifeTime;
     private float _lifetimeTimer;
     [SerializeField] [Range(0, 10)] private int _bulletSpeed;
-    [SerializeField] private string _bulletTargetTag;
+    private string _bulletTargetTag;
     private bool _hitted;
+
+    void Start()
+    {
+        if(_targetType == TargetType.Player) _bulletTargetTag = "Player";
+        else _bulletTargetTag = "Enemy";
+    }
 
     void OnEnable()
     {
@@ -38,7 +53,13 @@ public class Bullets : MonoBehaviour
         {
             if(_hitted) return;
             _hitted = true;
-            other.GetComponent<Life>().TookDamage(_bulletDamage);
+
+            int gameObjectId = other.gameObject.GetInstanceID();
+            if(_lastId != gameObjectId) _lastLifeGot = null;
+
+            if(_lastLifeGot == null) _lastLifeGot = other.GetComponent<Life>();
+            _lastLifeGot.TookDamage(_bulletDamage);
+
             StartCoroutine(DisableDelay());
         }
     }

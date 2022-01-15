@@ -14,11 +14,11 @@ public class OptionsMenu : MonoBehaviour
     void Start()
     {
         float sessionTime = PlayerPrefs.GetFloat("GameSessionTime");
-        float enemySpawnTime = PlayerPrefs.GetFloat("EnemySpawnTime");
+        float enemySpawnTime = PlayerPrefs.GetFloat("EnemiesSpawnTime");
         if(sessionTime == 0 || enemySpawnTime == 0) 
         {
             PlayerPrefs.SetFloat("GameSessionTime", _gameSessionTimeSlider.value);
-            PlayerPrefs.SetFloat("EnemySpawnTime", _enemySpawnTimeSlider.value);
+            PlayerPrefs.SetFloat("EnemiesSpawnTime", _enemySpawnTimeSlider.value);
         }
         else
         {
@@ -34,7 +34,7 @@ public class OptionsMenu : MonoBehaviour
 
     public void SetEnemySpawnTime(float time)
     {
-        PlayerPrefs.SetFloat("EnemySpawnTime", time);
+        PlayerPrefs.SetFloat("EnemiesSpawnTime", time);
     }
 
     public void DisplayGameSessionTime()
