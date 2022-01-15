@@ -4,12 +4,17 @@ using TMPro;
 
 public class SessionManager : MonoBehaviour
 {
+    [Header("Required Components---------")]
     [SerializeField] private Life _playerLife;
     [SerializeField] private GameObject _finishedSessionGroup;
-    [SerializeField] private TextMeshProUGUI _finishedSessionText;
-    [SerializeField] private TextMeshProUGUI _inGameScoreText, _finalScoreText;
 
-    [SerializeField] private TextMeshProUGUI _timerText;
+    [Header("Required Texts---------")]
+    [SerializeField] private TextMeshProUGUI _finishedSessionText, _inGameScoreText, _finalScoreText, _timerText;
+
+    [Header("Required Sounds---------")]
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] AudioClip _victory, _gameOver;
+
     private float _sessionTime, _sessionTimer;
     private float _sessionTimeMinutes, _sessionTimeSeconds;
     private bool _startSessionTimer;
@@ -78,6 +83,7 @@ public class SessionManager : MonoBehaviour
         _finalScoreText.SetText("Score: " + _score.ToString());
         _finishedSessionGroup.SetActive(true);
         _startSessionTimer = false;
+        _audioSource.PlayOneShot(_victory);
     }
 
     public void GameOver()
@@ -87,6 +93,7 @@ public class SessionManager : MonoBehaviour
         _finishedSessionText.SetText("Game Over");
         _finalScoreText.SetText("Score: " + _score.ToString());
         _finishedSessionGroup.SetActive(true);
+        _audioSource.PlayOneShot(_gameOver);
     }
 
     public void ResumeGame()

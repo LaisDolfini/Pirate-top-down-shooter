@@ -10,6 +10,8 @@ public class Life : MonoBehaviour
     [Header("Required Components----------")]
     [SerializeField] private Slider _lifeBar;
     [SerializeField] private GameObject _deathAnimation, _explosionAnimation;
+    [SerializeField] private AudioSource _gameplayAudioSource;
+    [SerializeField] private AudioClip _explosionSound;
     [SerializeField] private Sprite[] _shipFeedbackSprites;
     private SpriteRenderer _spriteRenderer;
 
@@ -76,6 +78,7 @@ public class Life : MonoBehaviour
         else _enemyMovement.enabled = false;
         _deathAnimation.SetActive(true);
         _explosionAnimation.SetActive(true);
+        _gameplayAudioSource.PlayOneShot(_explosionSound);
 
         yield return new WaitForSeconds(_deathDelay);
 
@@ -98,5 +101,11 @@ public class Life : MonoBehaviour
     public void Kill(bool increaseScore = true)
     {
         TookDamage(_currentLife, increaseScore);
+    }
+
+    public void LifeSetup(AudioSource gameplayAudioSource, AudioClip explosionSound)
+    {
+        _gameplayAudioSource =gameplayAudioSource;
+        _explosionSound = explosionSound;
     }
 }

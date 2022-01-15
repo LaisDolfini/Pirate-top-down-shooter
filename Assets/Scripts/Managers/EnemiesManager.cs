@@ -10,6 +10,8 @@ public class EnemiesManager : MonoBehaviour
     [SerializeField] private PirateTopDown.Pathfind.Grid _pathfindingGrid;
     [SerializeField] private BulletsManager _enemiesBulletsManager;
     [SerializeField] private Transform _player;
+    [SerializeField] private AudioSource _gameplayAudioSource;
+    [SerializeField] private AudioClip _explosionSound, _shotSound;
     
     [Header("Enemies Required Components------------")]
     [SerializeField] private Sprite _enemiesSprite;
@@ -41,9 +43,11 @@ public class EnemiesManager : MonoBehaviour
             enemiesList[i].GetComponent<Pathfinding>().Setup(_pathfindingGrid, _player);
             Life newLife = enemiesList[i].GetComponent<Life>();
             newLife.onDied += _sessionManager.SetScore;
+            newLife.LifeSetup(_gameplayAudioSource, _explosionSound);
             lifeList.Add(newLife);
 
-            if(isShooters) enemiesList[i].GetComponent<ShotAttack>().ShotAttackSetup(_enemiesBulletsManager, _enemiesHeight, _player);
+            if(isShooters) enemiesList[i].GetComponent<ShotAttack>().ShotAttackSetup(_enemiesBulletsManager, _enemiesHeight, _player,
+            _gameplayAudioSource, _shotSound);
         }
     }
 
@@ -125,10 +129,12 @@ public class EnemiesManager : MonoBehaviour
         newEnemy.GetComponent<Pathfinding>().Setup(_pathfindingGrid, _player);
         Life newLife = newEnemy.GetComponent<Life>();
         newLife.onDied += _sessionManager.SetScore;
+        newLife.LifeSetup(_gameplayAudioSource, _explosionSound);
         lifeList.Add(newLife);
         enemiesList.Add(newEnemy);
 
-        if(random == 0) newEnemy.GetComponent<ShotAttack>().ShotAttackSetup(_enemiesBulletsManager, _enemiesHeight, _player);
+        if(random == 0) newEnemy.GetComponent<ShotAttack>().ShotAttackSetup(_enemiesBulletsManager, _enemiesHeight, _player,
+        _gameplayAudioSource, _shotSound);
     } 
 
     GameObject VerifyEnemiesPool(List<GameObject> enemiesList, int listNumber)

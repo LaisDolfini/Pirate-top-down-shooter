@@ -10,6 +10,8 @@ public class ShotAttack : MonoBehaviour
     private EnemyMovement _enemyMovement;
     private Life _enemyLife;
     private Transform _player;
+    private AudioSource _gameplayAudioSource;
+    private AudioClip _shotSound;
 
     [SerializeField] [Range(0, 10)] private float _cooldown;
     private float _cooldownTimer;
@@ -37,13 +39,17 @@ public class ShotAttack : MonoBehaviour
 
         Vector3 playerDirection = _player.position - transform.position;
         _bulletsManager.InstantiateBullet(transform.position + (_characterHeight * transform.up), playerDirection);
+        _gameplayAudioSource.PlayOneShot(_shotSound);
         _cooldownTimer = 0;      
     }
 
-    public void ShotAttackSetup(BulletsManager bulletsManager, float charactersHeight, Transform player)
+    public void ShotAttackSetup(BulletsManager bulletsManager, float charactersHeight, Transform player, 
+    AudioSource gameplayAudioSource, AudioClip shotSound)
     {
         _bulletsManager = bulletsManager;
         _characterHeight = charactersHeight;
         _player = player;
+        _gameplayAudioSource = gameplayAudioSource;
+        _shotSound = shotSound;
     }
 }
