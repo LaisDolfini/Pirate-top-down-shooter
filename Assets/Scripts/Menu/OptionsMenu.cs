@@ -1,15 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class OptionsMenu : MonoBehaviour
 {
-    [SerializeField] private Slider _gameSessionTimeSlider;
-    [SerializeField] private Slider _enemySpawnTimeSlider;
-    [SerializeField] private TextMeshProUGUI _gameSessionTimeFeedbackText;
-    [SerializeField] private TextMeshProUGUI _enemySpawnTimeFeedbackText;
+    [SerializeField] private Slider _gameSessionTimeSlider, _enemySpawnTimeSlider;
+    [SerializeField] private TextMeshProUGUI _gameSessionTimeFeedbackText, _enemySpawnTimeFeedbackText;
 
     void Start()
     {

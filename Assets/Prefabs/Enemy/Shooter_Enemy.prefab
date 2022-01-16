@@ -498,8 +498,8 @@ GameObject:
   - component: {fileID: 7015874038980196405}
   - component: {fileID: 7015874038980196404}
   - component: {fileID: 7015874038980196407}
-  - component: {fileID: 7015874038980196408}
   - component: {fileID: 7015874038980196401}
+  - component: {fileID: 7015874038980196408}
   - component: {fileID: 7015874038980196410}
   - component: {fileID: 7015874038980196411}
   - component: {fileID: 7015874038980196406}
@@ -604,20 +604,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.66, y: 1.13}
   m_EdgeRadius: 0
---- !u!114 &7015874038980196408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7015874038980196400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69fc483a57740224a840244a6f687baa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _bulletsManager: {fileID: 0}
-  _cooldown: 1
 --- !u!114 &7015874038980196401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,6 +619,8 @@ MonoBehaviour:
   _lifeBar: {fileID: 7015874038077575086}
   _deathAnimation: {fileID: 8859290724700999793}
   _explosionAnimation: {fileID: 5571310982703506131}
+  _gameplayAudioSource: {fileID: 0}
+  _explosionSound: {fileID: 0}
   _shipFeedbackSprites:
   - {fileID: -4030218682350969340, guid: 880e7aa52eed9f44eac1e150c77f7639, type: 3}
   - {fileID: 8945501462872329395, guid: 880e7aa52eed9f44eac1e150c77f7639, type: 3}
@@ -641,6 +629,19 @@ MonoBehaviour:
   _characterType: 1
   _maxLife: 3
   _deathDelay: 1
+--- !u!114 &7015874038980196408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7015874038980196400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69fc483a57740224a840244a6f687baa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown: 1
 --- !u!114 &7015874038980196410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -653,7 +654,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba6a3a3c04b7ccf4fa1147e2a88f9e82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridRef: {fileID: 0}
   end: {fileID: 0}
 --- !u!114 &7015874038980196411
 MonoBehaviour:

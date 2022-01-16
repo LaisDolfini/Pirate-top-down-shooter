@@ -9,7 +9,8 @@ public class SessionManager : MonoBehaviour
     [SerializeField] private GameObject _finishedSessionGroup;
 
     [Header("Required Texts---------")]
-    [SerializeField] private TextMeshProUGUI _finishedSessionText, _inGameScoreText, _finalScoreText, _timerText;
+    [SerializeField] private TextMeshProUGUI _finishedSessionText;
+    [SerializeField] private TextMeshProUGUI _inGameScoreText, _finalScoreText, _timerText;
 
     [Header("Required Sounds---------")]
     [SerializeField] private AudioSource _audioSource;
